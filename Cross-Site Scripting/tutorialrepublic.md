@@ -2,17 +2,19 @@
 Reflected XSS - TutorialRepublic: Web Development Reference Search
 
 ## Description
-**Affected URL:** https://tutorialrepublic.pwnedbox.site/
+During testing, I observed that the search functionality processes user-supplied input through the `q` parameter. I tested the parameter using a JavaScript payload containing the prompt function. After submitting the crafted input, the browser displayed a prompt containing the message `XSS`. This confirms that the injected JavaScript was executed successfully. The screenshots above show the search input and the resulting JavaScript prompt. The issue occurs through the website's search functionality and can be triggered using a specially crafted URL. No additional user interaction beyond opening the crafted URL is required to trigger the demonstrated behavior.
 
 The search parameter `q` allows reflected JavaScript execution in the browser.
 
 ## Steps to Reproduce
-1. Open the affected website.
+1. Open the lab website: https://tutorialrepublic.pwnedbox.site/
 2. Inject the XSS payload into the `q` parameter.
 3. Load the crafted URL.
 4. Observe the JavaScript prompt displaying `XSS`.
 
 ## POC (Proof of Concept)
+**Lab Address:** https://tutorialrepublic.pwnedbox.site/
+**Affected Parameter:** `q`
 **Payload:**
 ```html
 <ScRiPt>prompt("XSS");</ScRiPt>
