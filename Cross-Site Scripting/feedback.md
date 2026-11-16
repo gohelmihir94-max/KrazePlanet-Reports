@@ -1,17 +1,27 @@
-# Reflected XSS - Script Tag Filter Evasion
-
+## Title
+Reflected XSS - Script Tag Filter Evasion
 
 ## Description
 
-I tested the First Name and Last Name fields in the GET Parameter Reflection lab. During testing, I entered specially crafted mixed-case script-tag payloads into both fields to check whether the application's script-tag filter could be bypassed.
+I tested the First Name and Last Name fields in the Reflected XSS - Script Tag Filter Evasion lab (Lab 37) on KrazePlanetLabs.
 
-After clicking Submit, the browser navigated from `search.pwnedbox.site` to `feedback.pwnedbox.site`. I observed that both payloads executed successfully. The first parameter displayed a JavaScript prompt containing `XSS1`, while the second displayed `XSS2`.
+During testing, I found that the application accepts user-controlled input through the `fname` and `lname` GET parameters. I submitted specially crafted mixed-case script-tag payloads to test the application's script-tag filtering.
 
-This testing confirmed that both `fname` and `lname` parameters are vulnerable to Reflected Cross-Site Scripting.
+After submitting the form, the browser navigated from `search.pwnedbox.site` to `feedback.pwnedbox.site`. Both payloads successfully executed JavaScript in the browser, displaying separate prompt dialogs containing `XSS1` and `XSS2`.
+
+This confirms Reflected Cross-Site Scripting through both GET parameters.
+
+**Affected URL:** https://feedback.pwnedbox.site/
+
+**HTTP Method:** GET
+
+**Affected Parameters:**
+- `fname` - First Name
+- `lname` - Last Name
 
 ## Steps to Reproduce
 
-1. Open `https://search.pwnedbox.site/`.
+1. Open the lab URL: https://search.pwnedbox.site/
 2. Navigate to the GET Parameter Reflection lab.
 3. Enter the following payload in the First Name field:
 
@@ -26,66 +36,59 @@ This testing confirmed that both `fname` and `lname` parameters are vulnerable t
    ```
 
 5. Click the Submit button.
-6. Observe the browser navigating to the vulnerable lab address: `https://feedback.pwnedbox.site/`.
+6. Observe that the browser navigates to `https://feedback.pwnedbox.site/`.
 7. Observe the JavaScript prompt displaying `XSS1`.
 8. Dismiss the first prompt and observe the second prompt displaying `XSS2`.
 
 ## POC (Proof of Concept)
 
-Lab Address: https://feedback.pwnedbox.site/
+**Lab Address:** https://feedback.pwnedbox.site/
 
 **HTTP Method:** GET
 
 **Vulnerable Parameters:** `fname`, `lname`
 
-**1. First Name (`fname`)**
+**1. First Name Parameter (`fname`)**
 
-Payload:
+**Payload:**
 ```html
 "mihir'"><ScRipT>prompt("XSS1");</ScRipT>
 ```
 
-Result: A JavaScript prompt appeared displaying `XSS1`, confirming successful execution through the `fname` parameter.
+**Result:** A JavaScript prompt appeared displaying `XSS1`, confirming successful execution through the `fname` parameter.
 
-**2. Last Name (`lname`)**
+**2. Last Name Parameter (`lname`)**
 
-Payload:
+**Payload:**
 ```html
 "mihir'"><ScRipT>prompt("XSS2");</ScRipT>
 ```
 
-Result: A JavaScript prompt appeared displaying `XSS2`, confirming successful execution through the `lname` parameter.
+**Result:** A JavaScript prompt appeared displaying `XSS2`, confirming successful execution through the `lname` parameter.
 
 **Request URL:**
-
 ```text
 https://feedback.pwnedbox.site/?fname=%22mihir%27%22%3C%3E%3CScRipT%3Eprompt%28%22XSS1%22%29%3B%3C%2FScRipT%3E&lname=%22mihir%27%22%3C%3E%3CScRipT%3Eprompt%28%22XSS2%22%29%3B%3C%2FScRipT%3E
 ```
 
 **Screenshots:**
 
-(Keep your four existing screenshots here.)
 <img width="1915" height="928" alt="image" src="https://github.com/user-attachments/assets/4c6fc968-52f2-4c0b-a5a7-5a3f3aefaa88" />
 <img width="1914" height="1021" alt="image" src="https://github.com/user-attachments/assets/76a9b18b-dc69-4e2a-a18f-515434831ac7" />
 <img width="1919" height="976" alt="image" src="https://github.com/user-attachments/assets/a9730bc5-f20c-47b6-956f-ff50159a7aa3" />
 <img width="1919" height="985" alt="image" src="https://github.com/user-attachments/assets/e1ffe87b-c518-4ee0-8235-47419481aaaf" />
 
 
-Both parameters successfully demonstrated JavaScript execution using the mixed-case `<ScRipT>` tag.
 
 ## Impact
 
-An attacker could potentially create a specially crafted URL containing the tested XSS payloads and trick a victim into visiting it.
-
-Since JavaScript execution was confirmed through both `fname` and `lname` parameters, successful exploitation could allow:
-
-- Execution of attacker-controlled JavaScript in the victim's browser.
-- Manipulation of the application's displayed content.
-- Phishing through a fake or modified application interface.
-- Unauthorized actions within the victim's authenticated session, depending on the application's security protections.
+1. An attacker could craft a malicious URL containing an XSS payload and trick a victim into opening it.
+2. Successful exploitation could allow JavaScript execution in the victim's browser, potentially enabling phishing attacks and manipulation of application content.
+3. Depending on application security protections, an attacker could potentially perform unauthorized actions within the victim's authenticated session.
 
 ## Remediation
 
-1. Avoid unsafe DOM manipulation methods such as `innerHTML` when handling untrusted input.
-2. Implement a restrictive Content Security Policy (CSP) as an additional security layer.
-3. Apply appropriate server-side input validation and sanitization as defense in depth.
+1. Implement context-aware output encoding for all user-controlled input before inserting it into HTML attributes or page content.
+2. Avoid unsafe DOM manipulation methods such as `innerHTML` when handling untrusted input.
+3. Apply appropriate server-side input validation and sanitization as an additional security measure.
+4. Implement a restrictive Content Security Policy (CSP) to reduce the risk of unauthorized script execution.
