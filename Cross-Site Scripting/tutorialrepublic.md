@@ -24,9 +24,9 @@ The search parameter `q` allows reflected JavaScript execution in the browser.
 JavaScript prompt successfully executed in the browser.
 
 ## Impact
-An attacker could execute JavaScript in a victim's browser through a crafted URL.
-This could lead to phishing attacks, unauthorized actions, or theft of accessible session data, depending on browser and application protections.
+1. An attacker could execute JavaScript in a victim's browser through a crafted URL.
+2. This could lead to phishing attacks, unauthorized actions, or theft of accessible session data, depending on browser and application protections.
 
 ## Remediation
-Implement proper input validation and context-aware output encoding.
-Apply a Content Security Policy (CSP) to restrict the execution of unauthorized scripts.
+1. Implement proper input validation and context-aware output encoding.
+2. Apply a Content Security Policy (CSP) to restrict the execution of unauthorized scripts.
