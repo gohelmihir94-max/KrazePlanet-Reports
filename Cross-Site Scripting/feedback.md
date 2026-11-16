@@ -1,26 +1,18 @@
 # Reflected XSS - Script Tag Filter Evasion
 
+
 ## Description
 
-A Reflected Cross-Site Scripting (XSS) vulnerability was identified in the **Reflected XSS - Script Tag Filter Evasion (Lab 37)** challenge on KrazePlanetLabs.
+I tested the First Name and Last Name fields in the GET Parameter Reflection lab. During testing, I entered specially crafted mixed-case script-tag payloads into both fields to check whether the application's script-tag filter could be bypassed.
 
-The application accepts user-controlled input through two GET parameters, `fname` (First Name) and `lname` (Last Name). By submitting specially crafted mixed-case script-tag payloads, JavaScript execution was successfully demonstrated in both parameters.
+After clicking Submit, the browser navigated from `search.pwnedbox.site` to `feedback.pwnedbox.site`. I observed that both payloads executed successfully. The first parameter displayed a JavaScript prompt containing `XSS1`, while the second displayed `XSS2`.
 
-The application navigates from `search.pwnedbox.site` to `feedback.pwnedbox.site`, where the supplied payloads trigger JavaScript prompt dialogs.
-
-**Affected URL:**
-`https://feedback.pwnedbox.site/`
-
-**HTTP Method:** GET
-
-**Affected Parameters:**
-- `fname`
-- `lname`
+This testing confirmed that both `fname` and `lname` parameters are vulnerable to Reflected Cross-Site Scripting.
 
 ## Steps to Reproduce
 
-1. Open the lab URL: `https://search.pwnedbox.site/`
-2. Navigate to the **GET Parameter Reflection** lab.
+1. Open `https://search.pwnedbox.site/`.
+2. Navigate to the GET Parameter Reflection lab.
 3. Enter the following payload in the First Name field:
 
    ```html
@@ -34,33 +26,45 @@ The application navigates from `search.pwnedbox.site` to `feedback.pwnedbox.site
    ```
 
 5. Click the Submit button.
-6. Observe that the browser navigates to `feedback.pwnedbox.site`.
-7. A JavaScript prompt dialog displaying `XSS1` appears.
-8. After dismissing the first dialog, another JavaScript prompt displaying `XSS2` appears.
+6. Observe the browser navigating to the vulnerable lab address: `https://feedback.pwnedbox.site/`.
+7. Observe the JavaScript prompt displaying `XSS1`.
+8. Dismiss the first prompt and observe the second prompt displaying `XSS2`.
 
 ## POC (Proof of Concept)
 
-**First Name Parameter (`fname`):**
+**Target URL:** `https://feedback.pwnedbox.site/`
 
+**HTTP Method:** GET
+
+**Vulnerable Parameters:** `fname`, `lname`
+
+**1. First Name (`fname`)**
+
+Payload:
 ```html
 "mihir'"><ScRipT>prompt("XSS1");</ScRipT>
 ```
 
-**Observed Result:** JavaScript execution was confirmed through a browser prompt displaying `XSS1`.
+Result: A JavaScript prompt appeared displaying `XSS1`, confirming successful execution through the `fname` parameter.
 
-**Last Name Parameter (`lname`):**
+**2. Last Name (`lname`)**
 
+Payload:
 ```html
 "mihir'"><ScRipT>prompt("XSS2");</ScRipT>
 ```
 
-**Observed Result:** JavaScript execution was confirmed through a browser prompt displaying `XSS2`.
+Result: A JavaScript prompt appeared displaying `XSS2`, confirming successful execution through the `lname` parameter.
 
 **Request URL:**
 
 ```text
 https://feedback.pwnedbox.site/?fname=%22mihir%27%22%3C%3E%3CScRipT%3Eprompt%28%22XSS1%22%29%3B%3C%2FScRipT%3E&lname=%22mihir%27%22%3C%3E%3CScRipT%3Eprompt%28%22XSS2%22%29%3B%3C%2FScRipT%3E
 ```
+
+**Screenshots:**
+
+(Keep your four existing screenshots here.)
 <img width="1915" height="928" alt="image" src="https://github.com/user-attachments/assets/4c6fc968-52f2-4c0b-a5a7-5a3f3aefaa88" />
 <img width="1914" height="1021" alt="image" src="https://github.com/user-attachments/assets/76a9b18b-dc69-4e2a-a18f-515434831ac7" />
 <img width="1919" height="976" alt="image" src="https://github.com/user-attachments/assets/a9730bc5-f20c-47b6-956f-ff50159a7aa3" />
