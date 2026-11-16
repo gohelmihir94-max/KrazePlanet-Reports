@@ -1,4 +1,4 @@
-<img width="1919" height="983" alt="image" src="https://github.com/user-attachments/assets/0005ec48-64e2-4478-8139-92cbf7930892" />## Title
+## Title
 Reflected XSS - GIGW: Government Website Guidelines Portal
 
 ## Description
