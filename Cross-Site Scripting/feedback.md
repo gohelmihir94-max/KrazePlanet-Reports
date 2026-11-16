@@ -32,7 +32,7 @@ This testing confirmed that both `fname` and `lname` parameters are vulnerable t
 
 ## POC (Proof of Concept)
 
-**Target URL:** `https://feedback.pwnedbox.site/`
+Lab Address: https://feedback.pwnedbox.site/
 
 **HTTP Method:** GET
 
@@ -75,14 +75,14 @@ Both parameters successfully demonstrated JavaScript execution using the mixed-c
 
 ## Impact
 
-An attacker could potentially exploit this vulnerability by crafting a malicious URL containing an XSS payload and convincing a victim to open it.
+An attacker could potentially create a specially crafted URL containing the tested XSS payloads and trick a victim into visiting it.
 
-Successful exploitation could lead to:
+Since JavaScript execution was confirmed through both `fname` and `lname` parameters, successful exploitation could allow:
 
-- Execution of arbitrary JavaScript in the victim's browser.
-- Phishing attacks through manipulated page content.
-- Unauthorized modification of application content.
-- Performing actions within the victim's authenticated session, subject to applicable security protections.
+- Execution of attacker-controlled JavaScript in the victim's browser.
+- Manipulation of the application's displayed content.
+- Phishing through a fake or modified application interface.
+- Unauthorized actions within the victim's authenticated session, depending on the application's security protections.
 
 ## Remediation
 
