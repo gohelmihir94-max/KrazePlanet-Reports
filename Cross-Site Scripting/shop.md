@@ -4,6 +4,8 @@ Reflected XSS - Category Filter
 ## Description
 The application is vulnerable to Reflected Cross-Site Scripting (XSS) through the `category` parameter on the experiments page. User-controlled input is reflected in the application, allowing JavaScript execution when a crafted URL is opened.
 
+The issue occurs because the application does not properly handle the supplied input before processing and displaying it. By using a mixed-case script tag and a Unicode-escaped character, JavaScript execution was successfully demonstrated in the browser.
+
 **Affected URL:** https://shop.pwnedbox.site/
 
 ## Steps to Reproduce
@@ -28,22 +30,25 @@ https://shop.pwnedbox.site/index.php?category=mihir%27%22%3E%3CScRiPt%3E%5Cu0061
 ```
 
 **Observed Result:**
-A browser alert displaying `XSS` appeared, confirming successful JavaScript execution through the `category` parameter.
+A browser alert displaying `XSS` appeared, confirming successful JavaScript execution through the `category` parameter. The alert was triggered when the crafted URL was opened in the browser.
 
 **Screenshot Evidence:**
+
 1. XSS payload submitted through the `category` parameter.
-   <img width="1919" height="965" alt="image" src="https://github.com/user-attachments/assets/fecf86fd-fe6d-4b46-ba5e-d43cd98e09ae" />
+
+<img width="1919" height="965" alt="Payload submitted" src="https://github.com/user-attachments/assets/fecf86fd-fe6d-4b46-ba5e-d43cd98e09ae" />
 
 2. Browser alert displaying `XSS`.
-   <img width="1919" height="982" alt="image" src="https://github.com/user-attachments/assets/57aed87b-9895-40d6-a39b-d6780597e7d0" />
 
+<img width="1919" height="982" alt="XSS alert" src="https://github.com/user-attachments/assets/57aed87b-9895-40d6-a39b-d6780597e7d0" />
 
 ## Impact
-An attacker could craft a malicious URL and trick a victim into opening it.
+An attacker could craft a malicious URL and trick a victim into opening it. Successful exploitation could affect users who visit the crafted link.
 
 - JavaScript execution in the victim's browser.
 - Phishing or manipulation of displayed page content.
 - Potential unauthorized actions within the victim's authenticated session, depending on application protections.
+- Possible misuse of the application's trusted origin to make malicious content appear legitimate.
 
 ## Remediation
 1. Apply context-aware output encoding to user-controlled input.
