@@ -79,15 +79,15 @@ A browser alert displaying `1` appeared, confirming successful JavaScript execut
 
 **Impact**
 
-Steal session cookies of every user who visits the page
-Admins are affected too since they visit the same page
-Can inject fake login forms to harvest credentials
-One submission hits every authenticated user
+1. Steal session cookies of every user who visits the page
+2. Admins are affected too since they visit the same page
+3. Can inject fake login forms to harvest credentials
+4. One submission hits every authenticated user
 
 **Remediation**
 
-Filter out HTML tags like: <script>, <img>, <svg> from the Report Name field before saving anything to the database
-Filter out JavaScript methods like: alert(), confirm(), prompt() so even if a tag slips through the method won't execute
-If you're using PHP then use htmlspecialchars() function before rendering any user input back to the page
-Use Cloudflare as they have so many WAF rules that almost all XSS payloads will be blocked automatically before even reaching the server
+1. Filter out HTML tags like: <script>, <img>, <svg> from the Report Name field before saving anything to the database
+2. Filter out JavaScript methods like: alert(), confirm(), prompt() so even if a tag slips through the method won't execute
+3. If you're using PHP then use htmlspecialchars() function before rendering any user input back to the page
+4. Use Cloudflare as they have so many WAF rules that almost all XSS payloads will be blocked automatically before even reaching the server
 
