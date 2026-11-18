@@ -46,9 +46,16 @@ The browser displayed a JavaScript confirmation dialog containing the text `XSS`
 **Screenshot Evidence:**
 
 1. x8 parameter discovery identified `username` as a reflected parameter.
+   <img width="1492" height="258" alt="image" src="https://github.com/user-attachments/assets/dc893222-1253-4a6f-950a-c3e3cc8a4e4d" />
 
-2. Browser confirmation dialog displaying `XSS`, demonstrating JavaScript execution.
-3. Messages page displaying the injected username content.
+
+3. Browser confirmation dialog displaying `XSS`, demonstrating JavaScript execution.
+   <img width="1915" height="971" alt="image" src="https://github.com/user-attachments/assets/8170084e-7c5b-4ea0-b3ef-e39455def759" />
+
+
+4. Messages page displaying the injected username content.
+   <img width="1919" height="971" alt="image" src="https://github.com/user-attachments/assets/ba3a04a6-43ee-40f8-8466-950ea401d57f" />
+
 
 ## Impact
 
