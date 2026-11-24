@@ -26,13 +26,14 @@ https://redirect.pwnedbox.site/?url=https://bing.com%2F
 
 **Observed Result:** Successfully redirected from `redirect.pwnedbox.site` to `bing.com`. The browser address bar confirms that navigation leaves the original domain and reaches the supplied external destination.
 
-<img width="1919" height="972" alt="image" src="https://github.com/user-attachments/assets/3132ca98-9611-4e2b-a8f4-9821dd746cc6" />
 
-<img width="1919" height="977" alt="image" src="https://github.com/user-attachments/assets/416d9d21-f2e4-4c73-ae8b-af7c393a9fc4" />
-
-<img width="1919" height="962" alt="image" src="https://github.com/user-attachments/assets/325e9920-97ef-433e-b5d6-98f2ccf6a26a" />
+<img width="1919" height="972" alt="image" src="https://github.com/user-attachments/assets/1a99add3-5f6d-40cc-9d02-ebc6d6b3c35f" />
 
 
+<img width="1919" height="977" alt="image" src="https://github.com/user-attachments/assets/95f90c61-7b29-4e1c-b74b-e433b555c4c7" />
+
+
+<img width="1919" height="962" alt="image" src="https://github.com/user-attachments/assets/a7c611b9-04f7-487a-95a3-dabfcd60c952" />
 
 
 ## Impact
