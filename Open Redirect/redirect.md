@@ -4,7 +4,7 @@ Open Redirect via URL Parameter
 ## Description
 **Affected URL:** https://redirect.pwnedbox.site/
 
-The `url` parameter is vulnerable to an Open Redirect vulnerability, allowing attackers to redirect users from the trusted website to arbitrary external websites by manipulating the destination URL.
+The `url` parameter is vulnerable to an Open Redirect vulnerability, allowing attackers to redirect users from the trusted website to arbitrary external websites by manipulating the destination URL. This behavior can be abused by crafting links that appear to originate from a legitimate domain while silently directing users to attacker-controlled websites. No authentication is required to trigger the demonstrated redirect.
 
 ## Steps to Reproduce
 1. Open https://redirect.pwnedbox.site/.
@@ -24,7 +24,7 @@ The `url` parameter is vulnerable to an Open Redirect vulnerability, allowing at
 https://redirect.pwnedbox.site/?url=https://bing.com%2F
 ```
 
-**Observed Result:** Successfully redirected from `redirect.pwnedbox.site` to `bing.com`.
+**Observed Result:** Successfully redirected from `redirect.pwnedbox.site` to `bing.com`. The browser address bar confirms that navigation leaves the original domain and reaches the supplied external destination.
 
 <img width="1919" height="972" alt="image" src="https://github.com/user-attachments/assets/3132ca98-9611-4e2b-a8f4-9821dd746cc6" />
 
